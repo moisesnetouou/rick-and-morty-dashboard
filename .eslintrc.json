@@ -1,3 +1,61 @@
 {
-  "extends": "next/core-web-vitals"
-}
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true
+    },
+    "extends": [
+      "next/core-web-vitals",
+      "plugin:react/recommended",
+      "airbnb",
+      "plugin:jsx-a11y/recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
+    "rules": {
+      "react-hooks/exhaustive-deps": "off",
+      "react/jsx-no-useless-fragment": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+          "ts": "never",
+          "tsx": "never"
+        }
+      ],
+      "import/no-duplicates": "off",
+      "import/no-extraneous-dependencies": "off",
+      "@typescript-eslint/no-var-requires": "off",
+      "import/prefer-default-export": "off",
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [".tsx"]
+        }
+      ],
+      "@typescript-eslint/camelcase": "off",
+      "react/react-in-jsx-scope": "off",
+      "react/no-danger": "off",
+      "react/jsx-props-no-spreading": "off",
+      "react/no-unstable-nested-components": "off",
+      "no-restricted-exports": "off"
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      },
+      "import/resolver": {
+        "typescript": {}
+      }
+    }
+  }
