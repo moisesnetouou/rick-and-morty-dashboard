@@ -38,8 +38,8 @@ const GET_DEAD_QUERY = gql`
 
 export function GridInfoCards() {
   const { data: stats, loading: isLoadingStats } = useQuery(GET_STATS_QUERY);
-  const { data: alive, loading: isLoadingAlive } = useQuery(GET_ALIVE_QUERY);
-  const { data: dead, loading: isLoadingDead } = useQuery(GET_DEAD_QUERY);
+  const { data: alive } = useQuery(GET_ALIVE_QUERY);
+  const { data: dead } = useQuery(GET_DEAD_QUERY);
 
   if (isLoadingStats) return <></>;
 

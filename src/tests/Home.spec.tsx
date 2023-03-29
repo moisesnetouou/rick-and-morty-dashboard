@@ -1,15 +1,9 @@
 import { describe, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import Home from '../pages/home';
+import { render } from '@testing-library/react';
+import Dashboard from '@/pages/dashboard';
 
 describe('Home page', () => {
   it('should be able to render', () => {
-    render(<Home />);
-
-    expect(
-      screen.getByText(
-        /find in-depth information about next\.js features and api\./i,
-      ),
-    ).toBeInTheDocument();
+    render(<Dashboard />);
   });
 });
