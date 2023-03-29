@@ -4,7 +4,7 @@ import { InfoCardContainer } from './styles';
 
 interface InfoCardProps {
   text: string;
-  value: string;
+  value: string | undefined;
 }
 
 export function InfoCard({ text, value }: InfoCardProps) {

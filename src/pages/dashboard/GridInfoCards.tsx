@@ -1,53 +1,45 @@
 import { InfoCard } from '@/components/InfoCard';
-import { gql, useQuery } from '@apollo/client';
-
-const GET_STATS_QUERY = gql`
-  query GetStatsQuery {
-    characters {
-      info {
-        count
-      }
-    }
-    locations {
-      info {
-        count
-      }
-    }
-  }
-`;
-
-const GET_ALIVE_QUERY = gql`
-  query {
-    characters(filter: { status: "alive" }) {
-      info {
-        count
-      }
-    }
-  }
-`;
-
-const GET_DEAD_QUERY = gql`
-  query {
-    characters(filter: { status: "dead" }) {
-      info {
-        count
-      }
-    }
-  }
-`;
+import { useQuery } from '@tanstack/react-query';
+import request from 'graphql-request';
+import { GET_ALIVE_QUERY, GET_DEAD_QUERY, GET_STATS_QUERY } from './queries';
+import { AliveParams, DeadParams, StatsParams, StatsQueryProps } from './types';
 
 export function GridInfoCards() {
-  const { data: stats, loading: isLoadingStats } = useQuery(GET_STATS_QUERY);
-  const { data: alive } = useQuery(GET_ALIVE_QUERY);
-  const { data: dead } = useQuery(GET_DEAD_QUERY);
+  const { data, isLoading } = useQuery<StatsQueryProps>({
+    queryKey: ['stats'],
+    queryFn: async () => {
+      const stats = await request<StatsParams>(
+        'https://rickandmortyapi.com/graphql',
+        GET_STATS_QUERY,
+      );
 
-  if (isLoadingStats) return <></>;
+      const alive = await request<AliveParams>(
+        'https://rickandmortyapi.com/graphql',
+        GET_ALIVE_QUERY,
+      );
+
+      const dead = await request<DeadParams>(
+        'https://rickandmortyapi.com/graphql',
+        GET_DEAD_QUERY,
+      );
+
+      return {
+        totalCharacters: stats.characters.info.count,
+        alive: alive.characters.info.count,
+        dead: dead.characters.info.count,
+      };
+    },
+  });
+
+  if (isLoading) {
+    <></>;
+  }
 
   return (
     <>
-      <InfoCard text="Personagens" value={stats.characters.info.count} />
-      <InfoCard text="Personagens vivos" value={alive.characters.info.count} />
-      <InfoCard text="Personagens mortos" value={dead.characters.info.count} />
+      <InfoCard text="Personagens" value={data?.totalCharacters} />
+      <InfoCard text="Personagens vivos" value={data?.alive} />
+      <InfoCard text="Personagens mortos" value={data?.dead} />
     </>
   );
 }
