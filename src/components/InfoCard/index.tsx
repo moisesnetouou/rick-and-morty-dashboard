@@ -5,11 +5,12 @@ import { InfoCardContainer } from './styles';
 interface InfoCardProps {
   text: string;
   value: string | undefined;
+  grid: string;
 }
 
-export function InfoCard({ text, value }: InfoCardProps) {
+export function InfoCard({ text, value, grid }: InfoCardProps) {
   return (
-    <InfoCardContainer>
+    <InfoCardContainer className={grid}>
       <div>
         <Feather size={32} />
 

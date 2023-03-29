@@ -10,6 +10,11 @@ export const GET_STATS_QUERY = `
         count
       }
     }
+    episodes {
+      info {
+        count
+      }
+    }
   }
 `;
 
