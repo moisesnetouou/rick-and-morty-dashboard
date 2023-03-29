@@ -23,7 +23,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
   body {
-    background: var(--white);
+    background: ${(props) => props.theme['white-100']};
     -webkit-font-smoothing: antialiased;
   }
   body, input, textarea, button {
