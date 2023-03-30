@@ -1,5 +1,5 @@
 /* import { Feather } from '@phosphor-icons/react'; */
-
+import { HiUsers } from 'react-icons/hi';
 import { InfoCardContainer } from './styles';
 
 interface InfoCardProps {
@@ -13,7 +13,7 @@ export function InfoCard({ text, value, subValue, grid }: InfoCardProps) {
   return (
     <InfoCardContainer className={grid}>
       <div>
-        {/* <Feather size={32} /> */}
+        <HiUsers size={32} />
 
         <span>{text}</span>
       </div>
