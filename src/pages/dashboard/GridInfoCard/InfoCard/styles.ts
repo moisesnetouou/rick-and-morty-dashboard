@@ -3,12 +3,10 @@ import styled from 'styled-components';
 export const InfoCardContainer = styled.div`
   background-color: ${(props) => props.theme['blue-800']};
   width: 20rem;
-  display: flex;
 
-  padding: 1.5rem 1rem;
+  padding: 1rem 1rem;
   border-radius: 0.8rem;
-  border: 2px solid ${(props) => props.theme['blue-100']};
-  justify-content: space-between;
+  border: 1px solid ${(props) => props.theme['blue-100']};
 
   > div {
     display: flex;
@@ -18,12 +16,18 @@ export const InfoCardContainer = styled.div`
     span {
       line-height: 1.1rem;
       font-size: 1rem;
-      width: 50%;
+      width: 11rem;
     }
   }
 
   h2 {
-    text-align: center;
+    margin-top: 1rem;
     color: ${(props) => props.theme['blue-100']};
+    font-size: 3rem;
+    font-weight: 400;
+
+    span {
+      font-size: 1.2rem;
+    }
   }
 `;

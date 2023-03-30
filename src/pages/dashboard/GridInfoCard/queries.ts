@@ -18,19 +18,9 @@ export const GET_STATS_QUERY = `
   }
 `;
 
-export const GET_ALIVE_QUERY = `
-  query GetAliveQuery{
-    characters(filter: { status: "alive" }) {
-      info {
-        count
-      }
-    }
-  }
-`;
-
-export const GET_DEAD_QUERY = `
-  query GetDeadQuery{
-    characters(filter: { status: "dead" }) {
+export const GET_CHARACTERS_BY_STATUS_QUERY = `
+  query GetCharactersByStatusQuery($status: String){
+    characters(filter: { status: $status }) {
       info {
         count
       }

@@ -49,7 +49,8 @@
       "react/no-danger": "off",
       "react/jsx-props-no-spreading": "off",
       "react/no-unstable-nested-components": "off",
-      "no-restricted-exports": "off"
+      "no-restricted-exports": "off",
+      "react/require-default-props": "off"
     },
     "settings": {
       "react": {

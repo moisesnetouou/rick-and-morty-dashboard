@@ -11,7 +11,7 @@ export function Layout({ children }: LayoutProps) {
     <LayoutContainer>
       <Aside />
 
-      {children}
+      <main>{children}</main>
     </LayoutContainer>
   );
 }

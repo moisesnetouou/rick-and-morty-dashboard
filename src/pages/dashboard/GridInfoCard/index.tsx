@@ -1,9 +1,9 @@
-import { InfoCard } from '@/components/InfoCard';
 import { useQuery } from '@tanstack/react-query';
 import request from 'graphql-request';
-import { GET_ALIVE_QUERY, GET_DEAD_QUERY, GET_STATS_QUERY } from './queries';
+import { InfoCard } from './InfoCard';
+import { GET_CHARACTERS_BY_STATUS_QUERY, GET_STATS_QUERY } from './queries';
 import { GridInfoCardContainer } from './styles';
-import { AliveParams, DeadParams, StatsParams, StatsQueryProps } from './types';
+import { CharactersParams, StatsParams, StatsQueryProps } from './types';
 
 export function GridInfoCard() {
   const { data, isLoading } = useQuery<StatsQueryProps>({
@@ -14,14 +14,28 @@ export function GridInfoCard() {
         GET_STATS_QUERY,
       );
 
-      const alive = await request<AliveParams>(
+      const alive = await request<CharactersParams>(
         'https://rickandmortyapi.com/graphql',
-        GET_ALIVE_QUERY,
+        GET_CHARACTERS_BY_STATUS_QUERY,
+        {
+          status: 'alive',
+        },
       );
 
-      const dead = await request<DeadParams>(
+      const dead = await request<CharactersParams>(
         'https://rickandmortyapi.com/graphql',
-        GET_DEAD_QUERY,
+        GET_CHARACTERS_BY_STATUS_QUERY,
+        {
+          status: 'dead',
+        },
+      );
+
+      const unknown = await request<CharactersParams>(
+        'https://rickandmortyapi.com/graphql',
+        GET_CHARACTERS_BY_STATUS_QUERY,
+        {
+          status: 'unknown',
+        },
       );
 
       return {
@@ -30,6 +44,7 @@ export function GridInfoCard() {
         totalEpisodes: stats.episodes.info.count,
         alive: alive.characters.info.count,
         dead: dead.characters.info.count,
+        unknown: unknown.characters.info.count,
       };
     },
   });
@@ -45,8 +60,17 @@ export function GridInfoCard() {
         text="Personagens"
         value={data?.totalCharacters}
       />
-      <InfoCard grid="alive" text="Personagens vivos" value={data?.alive} />
-      <InfoCard grid="dead" text="Personagens mortos" value={data?.dead} />
+      <InfoCard
+        grid="alive"
+        text="Personagens vivos/mortos"
+        value={data?.alive}
+        subValue={data?.dead}
+      />
+      <InfoCard
+        grid="dead"
+        text="Personagens com status desconhecido"
+        value={data?.unknown}
+      />
 
       <InfoCard grid="episodes" text="Episódios" value={data?.totalEpisodes} />
       <InfoCard

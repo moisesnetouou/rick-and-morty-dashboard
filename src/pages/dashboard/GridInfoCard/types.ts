@@ -2,6 +2,7 @@ export interface StatsQueryProps {
   totalCharacters: string;
   alive: string;
   dead: string;
+  unknown: string;
   totalLocations: string;
   totalEpisodes: string;
 }
@@ -24,15 +25,7 @@ export interface StatsParams {
   };
 }
 
-export interface AliveParams {
-  characters: {
-    info: {
-      count: string;
-    };
-  };
-}
-
-export interface DeadParams {
+export interface CharactersParams {
   characters: {
     info: {
       count: string;
