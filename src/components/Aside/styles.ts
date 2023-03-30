@@ -23,4 +23,8 @@ export const AsideContainer = styled.aside`
       color: ${(props) => props.theme['blue-800']};
     }
   }
+
+  @media (max-width: 56.25em) {
+    display: none;
+  }
 `;
