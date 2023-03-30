@@ -1,15 +1,18 @@
 import styled from 'styled-components';
 
 export const GridInfoCardContainer = styled.div`
-  display: grid;
+  margin-top: 4rem;
 
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  gap: 0px 0px;
+
   grid-template-areas:
     'characters alive dead'
-    'episodes locations favorites'
-    '. . .';
+    'episodes locations favorites';
+
+  column-gap: 5rem;
+  row-gap: 5rem;
 
   .characters {
     grid-area: characters;
@@ -33,5 +36,33 @@ export const GridInfoCardContainer = styled.div`
 
   .favorites {
     grid-area: favorites;
+  }
+
+  @media (max-width: 88.75em) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+
+    grid-template-areas:
+      'characters alive'
+      'dead episodes'
+      'locations favorites';
+  }
+
+  @media (max-width: 37.5em) {
+    margin: 2rem 0;
+
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+
+    grid-template-areas:
+      'characters'
+      'alive'
+      'dead'
+      'episodes'
+      'locations'
+      'favorites';
+
+    column-gap: 0;
+    row-gap: 2rem;
   }
 `;

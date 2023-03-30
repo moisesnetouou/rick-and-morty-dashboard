@@ -5,8 +5,9 @@ export const LayoutContainer = styled.div`
   overflow: scroll-y;
   background-color: #020617;
 
-  main {
+  > main {
     width: 100%;
-    padding: 0 2rem;
+    padding: 4rem 2rem 0;
+    height: 100vh;
   }
 `;

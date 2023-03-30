@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const InfoCardContainer = styled.div`
   background-color: ${(props) => props.theme['blue-800']};
-  width: 20rem;
+  width: 100%;
 
   padding: 1rem 1rem;
   border-radius: 0.8rem;

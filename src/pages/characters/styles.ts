@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 export const CharactersContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  background-color: red;
   overflow: auto;
 `;
 
