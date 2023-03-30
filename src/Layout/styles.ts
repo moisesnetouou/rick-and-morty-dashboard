@@ -7,6 +7,6 @@ export const LayoutContainer = styled.div`
 
   main {
     width: 100%;
-    padding: 2rem 2rem;
+    padding: 0 2rem;
   }
 `;

@@ -15,6 +15,8 @@ export const AsideContainer = styled.aside`
     align-items: center;
 
     > div {
+      display: flex;
+      flex-direction: column;
       width: 100%;
       margin-top: 4rem;
 
