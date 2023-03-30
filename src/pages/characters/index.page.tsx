@@ -7,6 +7,7 @@ import {
   AvatarFallback,
   AvatarImage,
   CharactersContainer,
+  Status,
 } from './styles';
 
 export const GET_CHARACTERS_QUERY = `
@@ -68,17 +69,31 @@ export default function Characters() {
               return (
                 <tr key={character.id}>
                   <td>
-                    <AvatarContainer>
-                      <AvatarImage src={character.image} />
+                    <div>
+                      <AvatarContainer>
+                        <AvatarImage src={character.image} />
 
-                      <AvatarFallback delayMs={600}>
-                        <User />
-                      </AvatarFallback>
-                    </AvatarContainer>
+                        <AvatarFallback delayMs={600}>
+                          <User />
+                        </AvatarFallback>
+                      </AvatarContainer>
 
-                    <span>{character.name}</span>
+                      <span>{character.name}</span>
+                    </div>
                   </td>
-                  <td>{character.status}</td>
+                  <td>
+                    {character.status === 'Alive' && (
+                      <Status statusColor="green">{character.status}</Status>
+                    )}
+
+                    {character.status === 'Dead' && (
+                      <Status statusColor="red">{character.status}</Status>
+                    )}
+
+                    {character.status === 'unknown' && (
+                      <Status statusColor="yellow">{character.status}</Status>
+                    )}
+                  </td>
                   <td>{character.species}</td>
                   <td />
                 </tr>

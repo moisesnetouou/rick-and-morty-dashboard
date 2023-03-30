@@ -14,9 +14,9 @@ export const InfoCardContainer = styled.div`
     gap: 0.5rem;
 
     span {
-      line-height: 1.1rem;
-      font-size: 1rem;
-      width: 11rem;
+      line-height: 1.5rem;
+      font-size: 1.2rem;
+      width: 14rem;
     }
   }
 
