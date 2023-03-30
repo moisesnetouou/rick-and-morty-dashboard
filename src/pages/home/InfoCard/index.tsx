@@ -1,4 +1,4 @@
-import { Feather } from '@phosphor-icons/react';
+/* import { Feather } from '@phosphor-icons/react'; */
 
 import { InfoCardContainer } from './styles';
 
@@ -13,7 +13,7 @@ export function InfoCard({ text, value, subValue, grid }: InfoCardProps) {
   return (
     <InfoCardContainer className={grid}>
       <div>
-        <Feather size={32} />
+        {/* <Feather size={32} /> */}
 
         <span>{text}</span>
       </div>
