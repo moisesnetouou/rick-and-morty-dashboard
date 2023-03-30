@@ -1,5 +1,7 @@
-export const GET_STATS_QUERY = `
-  query GetStatsQuery{
+import { gql } from 'graphql-request';
+
+export const GET_STATS_QUERY = gql`
+  query GetStatsQuery {
     characters {
       info {
         count
@@ -18,8 +20,8 @@ export const GET_STATS_QUERY = `
   }
 `;
 
-export const GET_CHARACTERS_BY_STATUS_QUERY = `
-  query GetCharactersByStatusQuery($status: String){
+export const GET_CHARACTERS_BY_STATUS_QUERY = gql`
+  query GetCharactersByStatusQuery($status: String) {
     characters(filter: { status: $status }) {
       info {
         count
