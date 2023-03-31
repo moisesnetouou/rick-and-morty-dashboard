@@ -4,7 +4,7 @@ import { InfoCardContainer } from './styles';
 
 interface InfoCardProps {
   text: string;
-  value: string | undefined;
+  value: string | number | undefined;
   subValue?: string | undefined;
   grid: string;
 }

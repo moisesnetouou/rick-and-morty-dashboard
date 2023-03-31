@@ -1,3 +1,4 @@
+import { useFavoriteStore } from '@/store/useFavoriteStore';
 import { useQuery } from '@tanstack/react-query';
 import request from 'graphql-request';
 import { GetServerSideProps } from 'next';
@@ -15,6 +16,8 @@ import {
 import { CharactersParams, StatsParams, StatsQueryProps } from './home/types';
 
 export default function Dashboard({ general }: any) {
+  const count = useFavoriteStore((state) => state.count);
+
   const { data } = useQuery<StatsQueryProps>({
     queryKey: ['stats'],
     initialData: general,
@@ -56,7 +59,7 @@ export default function Dashboard({ general }: any) {
           text="Localizações"
           value={data?.totalLocations}
         />
-        <InfoCard grid="favorites" text="Favoritos" value="0" />
+        <InfoCard grid="favorites" text="Favoritos" value={count} />
       </GridInfoCardContainer>
     </DashboardContainer>
   );

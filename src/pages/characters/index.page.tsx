@@ -1,7 +1,9 @@
+import { useFavoriteStore } from '@/store/useFavoriteStore';
 import { useQuery } from '@tanstack/react-query';
 import { request, gql } from 'graphql-request';
 import { User } from 'phosphor-react';
 import { HiHeart } from 'react-icons/hi';
+
 import {
   AvatarContainer,
   CharactersList,
@@ -34,6 +36,8 @@ export const GET_CHARACTERS_QUERY = gql`
 `;
 
 export default function Characters() {
+  const { addFavorites } = useFavoriteStore((state) => state);
+
   const { data, isLoading } = useQuery({
     queryKey: ['characters'],
     queryFn: async () => {
@@ -127,7 +131,10 @@ export default function Characters() {
               </div>
 
               <div className="action-buttons">
-                <button type="button">
+                <button
+                  type="button"
+                  onClick={() => addFavorites(character.id)}
+                >
                   <HiHeart size={32} />
                 </button>
 
