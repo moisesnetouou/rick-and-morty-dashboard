@@ -1,3 +1,14 @@
+export interface DashboardProps {
+  general: {
+    alive: 'string';
+    dead: 'string';
+    totalCharacters: 'string';
+    totalEpisodes: 'string';
+    totalLocations: 'string';
+    unknown: 'string';
+  };
+}
+
 export interface StatsQueryProps {
   totalCharacters: string;
   alive: string;

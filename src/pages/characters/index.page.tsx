@@ -1,9 +1,14 @@
 import { useFavoriteStore } from '@/store/useFavoriteStore';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { request, gql } from 'graphql-request';
 import { User } from 'phosphor-react';
 import { HiHeart } from 'react-icons/hi';
+import { RiShareBoxFill } from 'react-icons/ri';
+import { useState } from 'react';
 
+import Link from 'next/link';
+import { BsSearch } from 'react-icons/bs';
+import { queryClient } from '@/services/queryClient';
 import {
   AvatarContainer,
   CharactersList,
@@ -13,11 +18,12 @@ import {
   Status,
   CharactersStack,
   CharacterCard,
+  Filter,
 } from './styles';
 
 export const GET_CHARACTERS_QUERY = gql`
-  query GetCharactersQuery {
-    characters(page: 1) {
+  query GetCharactersQuery($status: String) {
+    characters(page: 1, filter: { status: $status }) {
       info {
         count
         prev
@@ -37,13 +43,17 @@ export const GET_CHARACTERS_QUERY = gql`
 
 export default function Characters() {
   const { addFavorites } = useFavoriteStore((state) => state);
+  const [filterBy, setFilterBy] = useState('');
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['characters'],
     queryFn: async () => {
       const { characters } = await request<any>(
         'https://rickandmortyapi.com/graphql',
         GET_CHARACTERS_QUERY,
+        {
+          status: filterBy,
+        },
       );
 
       return {
@@ -53,12 +63,73 @@ export default function Characters() {
     },
   });
 
+  const changeStatus = useMutation({
+    mutationFn: async (status: string) => {
+      setFilterBy(status);
+
+      return status;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['characters'],
+        exact: true,
+      });
+
+      refetch();
+    },
+  });
+
+  async function handleFilterBy(status: string) {
+    changeStatus.mutateAsync(status);
+  }
+
   if (isLoading) {
     return <></>;
   }
 
   return (
     <CharactersContainer>
+      <h1>Characters</h1>
+
+      <Filter>
+        <div>
+          <button
+            className={filterBy === '' ? 'isActive' : ''}
+            type="button"
+            onClick={() => handleFilterBy('')}
+          >
+            All
+          </button>
+          <button
+            className={filterBy === 'alive' ? 'isActive' : ''}
+            type="button"
+            onClick={() => handleFilterBy('alive')}
+          >
+            Alive
+          </button>
+          <button
+            className={filterBy === 'dead' ? 'isActive' : ''}
+            type="button"
+            onClick={() => handleFilterBy('dead')}
+          >
+            Dead
+          </button>
+          <button
+            className={filterBy === 'unknown' ? 'isActive' : ''}
+            type="button"
+            onClick={() => handleFilterBy('unknown')}
+          >
+            Unknown
+          </button>
+        </div>
+
+        <label htmlFor="name">
+          <BsSearch />
+
+          <input type="search" id="name" />
+        </label>
+      </Filter>
+
       <CharactersList>
         <table>
           <thead>
@@ -101,7 +172,20 @@ export default function Characters() {
                     )}
                   </td>
                   <td>{character.species}</td>
-                  <td />
+                  <td>
+                    <div className="actions-td-button">
+                      <button
+                        type="button"
+                        onClick={() => addFavorites(character.id)}
+                      >
+                        <HiHeart size={32} />
+                      </button>
+
+                      <Link href="/">
+                        <RiShareBoxFill size={26} />
+                      </Link>
+                    </div>
+                  </td>
                 </tr>
               );
             })}
@@ -126,8 +210,12 @@ export default function Characters() {
                   <span>{character.name}</span>
                 </div>
 
-                <h2>Status: {character.status}</h2>
-                <h2>Species: {character.species}</h2>
+                <h2>
+                  Status: <span>{character.status}</span>
+                </h2>
+                <h2>
+                  Species: <span>{character.species}</span>
+                </h2>
               </div>
 
               <div className="action-buttons">
@@ -138,9 +226,9 @@ export default function Characters() {
                   <HiHeart size={32} />
                 </button>
 
-                <button type="button">
-                  <HiHeart size={32} />
-                </button>
+                <Link href="/">
+                  <RiShareBoxFill size={26} />
+                </Link>
               </div>
             </CharacterCard>
           );

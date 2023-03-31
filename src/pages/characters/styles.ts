@@ -55,11 +55,26 @@ export const CharactersList = styled.div`
       }
 
       &:first-child {
-        width: 30%;
+        width: 50%;
         padding-left: 1.5rem;
       }
       &:last-child {
         padding-right: 1.5rem;
+      }
+    }
+
+    .actions-td-button {
+      display: flex;
+      justify-content: right;
+
+      button {
+        background: none;
+        border: none;
+        display: flex;
+      }
+
+      a {
+        display: flex;
       }
     }
   }
@@ -132,6 +147,43 @@ export const CharactersStack = styled.div`
   }
 `;
 
+export const Filter = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  div {
+    display: flex;
+    gap: 0.5rem;
+
+    button {
+      height: 2rem;
+      padding: 0 1rem;
+      border: none;
+      border-radius: 0.5rem;
+    }
+
+    .isActive {
+      background: ${(props) => props.theme['green-500']};
+    }
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: ${(props) => props.theme['gray-600']};
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+
+    input {
+      border: none;
+      background: ${(props) => props.theme['gray-600']};
+      width: 18rem;
+    }
+  }
+`;
+
 export const CharacterCard = styled.div`
   background-color: ${(props) => props.theme['gray-600']};
   border-radius: 1rem;
@@ -146,6 +198,17 @@ export const CharacterCard = styled.div`
     div {
       display: flex;
       align-items: center;
+      margin-bottom: 1rem;
+      gap: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 400;
+
+      span {
+        font-weight: 300;
+      }
     }
   }
 

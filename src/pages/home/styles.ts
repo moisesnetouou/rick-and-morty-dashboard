@@ -11,7 +11,12 @@ export const DashboardContainer = styled.main`
   }
 `;
 
-export const DashboardContent = styled.div``;
+export const DashboardContent = styled.div`
+  h1 {
+    font-weight: 400;
+    font-size: 2rem;
+  }
+`;
 
 export const GridInfoCardContainer = styled.div`
   margin-top: 4rem;

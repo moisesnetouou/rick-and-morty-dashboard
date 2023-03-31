@@ -1,7 +1,12 @@
-import { useFavoriteStore } from '@/store/useFavoriteStore';
+import { GetServerSideProps } from 'next';
 import { useQuery } from '@tanstack/react-query';
 import request from 'graphql-request';
-import { GetServerSideProps } from 'next';
+import { BsFillPeopleFill } from 'react-icons/bs';
+import { GiLifeBar } from 'react-icons/gi';
+import { VscWorkspaceUnknown } from 'react-icons/vsc';
+import { SlScreenDesktop } from 'react-icons/sl';
+import { GoLocation } from 'react-icons/go';
+import { AiFillLock } from 'react-icons/ai';
 
 import { InfoCard } from './home/InfoCard';
 import {
@@ -13,11 +18,14 @@ import {
   DashboardContent,
   GridInfoCardContainer,
 } from './home/styles';
-import { CharactersParams, StatsParams, StatsQueryProps } from './home/types';
+import {
+  CharactersParams,
+  DashboardProps,
+  StatsParams,
+  StatsQueryProps,
+} from './home/types';
 
-export default function Dashboard({ general }: any) {
-  const count = useFavoriteStore((state) => state.count);
-
+export default function Dashboard({ general }: DashboardProps) {
   const { data } = useQuery<StatsQueryProps>({
     queryKey: ['stats'],
     initialData: general,
@@ -36,30 +44,40 @@ export default function Dashboard({ general }: any) {
           grid="characters"
           text="Personagens"
           value={data?.totalCharacters}
-        />
+        >
+          <BsFillPeopleFill size={32} />
+        </InfoCard>
         <InfoCard
           grid="alive"
           text="Personagens vivos/mortos"
           value={data?.alive}
           subValue={data?.dead}
-        />
+        >
+          <GiLifeBar size={32} />
+        </InfoCard>
+
         <InfoCard
           grid="dead"
           text="Personagens com status desconhecido"
           value={data?.unknown}
-        />
+        >
+          <VscWorkspaceUnknown size={32} />
+        </InfoCard>
 
-        <InfoCard
-          grid="episodes"
-          text="Episódios"
-          value={data?.totalEpisodes}
-        />
+        <InfoCard grid="episodes" text="Episódios" value={data?.totalEpisodes}>
+          <SlScreenDesktop size={32} />
+        </InfoCard>
         <InfoCard
           grid="locations"
           text="Localizações"
           value={data?.totalLocations}
-        />
-        <InfoCard grid="favorites" text="Favoritos" value={count} />
+        >
+          <GoLocation size={32} />
+        </InfoCard>
+
+        <InfoCard grid="favorites" text="Lock" value="-">
+          <AiFillLock size={32} />
+        </InfoCard>
       </GridInfoCardContainer>
     </DashboardContainer>
   );

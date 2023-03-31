@@ -1,5 +1,4 @@
-/* import { Feather } from '@phosphor-icons/react'; */
-import { HiUsers } from 'react-icons/hi';
+import { ReactNode } from 'react';
 import { InfoCardContainer } from './styles';
 
 interface InfoCardProps {
@@ -7,13 +6,20 @@ interface InfoCardProps {
   value: string | number | undefined;
   subValue?: string | undefined;
   grid: string;
+  children: ReactNode;
 }
 
-export function InfoCard({ text, value, subValue, grid }: InfoCardProps) {
+export function InfoCard({
+  text,
+  value,
+  subValue,
+  grid,
+  children,
+}: InfoCardProps) {
   return (
     <InfoCardContainer className={grid}>
       <div>
-        <HiUsers size={32} />
+        {children}
 
         <span>{text}</span>
       </div>

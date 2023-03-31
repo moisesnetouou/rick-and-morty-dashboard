@@ -13,6 +13,10 @@ export const InfoCardContainer = styled.div`
     align-items: center;
     gap: 0.5rem;
 
+    svg {
+      color: ${(props) => props.theme['white-100']};
+    }
+
     span {
       line-height: 1.5rem;
       font-size: 1.2rem;
