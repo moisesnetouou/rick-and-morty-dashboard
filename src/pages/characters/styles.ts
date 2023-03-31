@@ -139,6 +139,7 @@ export const Status = styled.span<StatusProps>`
 
 export const CharactersStack = styled.div`
   display: none;
+  margin-top: 2rem;
 
   @media (max-width: 56.25em) {
     display: flex;
@@ -181,6 +182,13 @@ export const Filter = styled.div`
       background: ${(props) => props.theme['gray-600']};
       width: 18rem;
     }
+  }
+
+  @media (max-width: 56.25em) {
+    display: flex;
+    align-items: initial;
+    flex-direction: column;
+    gap: 1rem;
   }
 `;
 
