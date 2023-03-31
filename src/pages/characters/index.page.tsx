@@ -9,6 +9,7 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import Link from 'next/link';
 import { BsSearch } from 'react-icons/bs';
 import { queryClient } from '@/services/queryClient';
+import { Pagination } from '@/components/Pagination';
 import {
   AvatarContainer,
   CharactersList,
@@ -22,8 +23,8 @@ import {
 } from './styles';
 
 export const GET_CHARACTERS_QUERY = gql`
-  query GetCharactersQuery($status: String, $name: String) {
-    characters(page: 1, filter: { status: $status, name: $name }) {
+  query GetCharactersQuery($status: String, $name: String, $page: Int) {
+    characters(page: $page, filter: { status: $status, name: $name }) {
       info {
         count
         prev
@@ -45,14 +46,16 @@ export default function Characters() {
   const { addFavorites } = useFavoriteStore((state) => state);
   const [filterBy, setFilterBy] = useState('');
   const [filterName, setFilterName] = useState('');
+  const [page, setPage] = useState(1);
 
   const { data, isLoading, refetch, isRefetching } = useQuery({
-    queryKey: ['characters'],
+    queryKey: ['characters', page],
     queryFn: async () => {
       const { characters } = await request<any>(
         'https://rickandmortyapi.com/graphql',
         GET_CHARACTERS_QUERY,
         {
+          page,
           status: filterBy,
           name: filterName,
         },
@@ -64,6 +67,8 @@ export default function Characters() {
       };
     },
   });
+
+  console.log(data);
 
   const changeStatus = useMutation({
     mutationFn: async (status: string) => {
@@ -97,8 +102,28 @@ export default function Characters() {
     },
   });
 
+  const changePage = useMutation({
+    mutationFn: async (numberPage: number) => {
+      setPage(numberPage);
+
+      return numberPage;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['characters'],
+        exact: true,
+      });
+
+      refetch();
+    },
+  });
+
   async function handleFilterBy(status: string) {
     changeStatus.mutateAsync(status);
+  }
+
+  async function handleChangePage(numberPage: number) {
+    changePage.mutateAsync(numberPage);
   }
 
   async function onSubHandleEnter(event: KeyboardEvent<HTMLInputElement>) {
@@ -155,7 +180,6 @@ export default function Characters() {
           <input
             type="search"
             id="name"
-            // onChange={(e) => submitName(e.target.value)}
             onChange={(e) => setFilterName(e.target.value)}
             onKeyDown={(event) => onSubHandleEnter(event)}
           />
@@ -274,6 +298,15 @@ export default function Characters() {
               );
             })}
           </CharactersStack>
+
+          <Pagination
+            page={page}
+            totalPages={data?.info.pages}
+            next={data?.info.next}
+            prev={data?.info.prev}
+            onNext={() => handleChangePage(page + 1)}
+            onPrev={() => handleChangePage(page - 1)}
+          />
         </>
       )}
     </CharactersContainer>
