@@ -6,7 +6,7 @@ export const CharacterContainer = styled.div`
   height: 100%;
 
   display: flex;
-  gap: 2rem;
+  gap: 4rem;
 
   overflow: scroll;
 
@@ -123,6 +123,8 @@ export const Episode = styled.div`
   flex-direction: column;
   padding: 2rem;
   border-radius: 0.5rem;
+
+  width: 20rem;
 
   @media (max-width: 56.25em) {
     width: 100%;

@@ -68,8 +68,6 @@ export default function Characters() {
     },
   });
 
-  console.log(data);
-
   const changeStatus = useMutation({
     mutationFn: async (status: string) => {
       setFilterBy(status);
@@ -245,7 +243,7 @@ export default function Characters() {
                             <HiHeart size={32} />
                           </button>
 
-                          <Link href="/">
+                          <Link href={`character/${character.id}`}>
                             <RiShareBoxFill size={26} />
                           </Link>
                         </div>
