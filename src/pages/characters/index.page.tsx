@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import request from 'graphql-request';
+import { request, gql } from 'graphql-request';
 import { User } from 'phosphor-react';
+import { HiHeart } from 'react-icons/hi';
 import {
   AvatarContainer,
   CharactersList,
@@ -8,19 +9,20 @@ import {
   AvatarImage,
   CharactersContainer,
   Status,
+  CharactersStack,
+  CharacterCard,
 } from './styles';
 
-export const GET_CHARACTERS_QUERY = `
-  query GetCharactersQuery{
+export const GET_CHARACTERS_QUERY = gql`
+  query GetCharactersQuery {
     characters(page: 1) {
       info {
         count
         prev
         next
         pages
-        
       }
-      results{
+      results {
         id
         name
         image
@@ -102,6 +104,41 @@ export default function Characters() {
           </tbody>
         </table>
       </CharactersList>
+
+      <CharactersStack>
+        {data?.results.map((character: any) => {
+          return (
+            <CharacterCard key={character.id}>
+              <div>
+                <div>
+                  <AvatarContainer>
+                    <AvatarImage src={character.image} />
+
+                    <AvatarFallback delayMs={600}>
+                      <User />
+                    </AvatarFallback>
+                  </AvatarContainer>
+
+                  <span>{character.name}</span>
+                </div>
+
+                <h2>Status: {character.status}</h2>
+                <h2>Species: {character.species}</h2>
+              </div>
+
+              <div className="action-buttons">
+                <button type="button">
+                  <HiHeart size={32} />
+                </button>
+
+                <button type="button">
+                  <HiHeart size={32} />
+                </button>
+              </div>
+            </CharacterCard>
+          );
+        })}
+      </CharactersStack>
     </CharactersContainer>
   );
 }

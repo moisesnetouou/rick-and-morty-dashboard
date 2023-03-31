@@ -63,6 +63,10 @@ export const CharactersList = styled.div`
       }
     }
   }
+
+  @media (max-width: 56.25em) {
+    display: none;
+  }
 `;
 
 export const AvatarContainer = styled(Avatar.Root)`
@@ -115,5 +119,44 @@ export const Status = styled.span<StatusProps>`
     border-radius: 50%;
     background-color: ${(props) =>
       props.theme[STATUS_COLORS[props.statusColor]]};
+  }
+`;
+
+export const CharactersStack = styled.div`
+  display: none;
+
+  @media (max-width: 56.25em) {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+`;
+
+export const CharacterCard = styled.div`
+  background-color: ${(props) => props.theme['gray-600']};
+  border-radius: 1rem;
+  padding: 2rem;
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  > div {
+    div {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    button {
+      background: none;
+      border: 0;
+    }
   }
 `;
